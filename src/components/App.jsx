@@ -1,3 +1,6 @@
+import UserCard from './UserCard/UserCard'
+import users from '../components/users.json'
+
 export const App = () => {
   return (
     <div
@@ -10,7 +13,7 @@ export const App = () => {
         color: '#010101'
       }}
     >
-      React homework template
+      <UserCard avatar={users.avatar } tweets={users.tweets } followers={users.followers} />
     </div>
   );
 };
