@@ -1,43 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import Boy from '../images/Boy.png';
+import picture from '../images/picture2.png'
+import logo from '../images/Logo.png'
+
+import { CardBox, PictureBox, Logo, Picture, Divider, Avatar, InfoBox, Text, Button } from './UserCard.styled'
 
 const UserCard = ({ avatar, tweets }) => {
   const [followers, setFollowers] = useState(() => {
     return JSON.parse(localStorage.getItem('followers')) ?? 100500;
   });
 
-  console.log(followers);
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(() => {
+    return JSON.parse(localStorage.getItem('isFollowing')) ?? false;
+  });
 
   useEffect(() => {
-    const isFollowing = localStorage.getItem('isFollowing');
-
-    if (isFollowing === 'true') {
-      setIsFollowing(true);
-    }
-  }, []);
+    localStorage.setItem('isFollowing', isFollowing);
+    localStorage.setItem('followers', JSON.stringify(followers));
+  }, [isFollowing, followers]);
 
   const handleFollow = () => {
-    localStorage.setItem('isFollowing', !isFollowing);
-
-    setIsFollowing(prev => !prev);
-
     setFollowers(prev => prev + (isFollowing ? -1 : 1));
-  
-    localStorage.setItem('followers', JSON.stringify(followers));
-    
+    setIsFollowing(prev => !prev);
   };
 
   return (
-    <div>
-      <img src={Boy} alt="Bob" />
-      <p>{tweets} tweets</p>
-      <p>{followers} followers</p>
+    <CardBox>
+       <Logo src={logo} alt="logo" />
+      <PictureBox>
+        <Picture src={picture} alt="Goit" />
+      </PictureBox>
+      <Divider>
+        <Avatar src={Boy} alt="Bob" />
+      </Divider>
+      <InfoBox>
+<Text>{tweets} tweets</Text>
+      <Text>{followers} followers</Text>
 
-      <button onClick={handleFollow} className={isFollowing ? 'following' : ''}>
+      <Button onClick={handleFollow} className={isFollowing ? 'following' : ''}>
         {isFollowing ? 'Following' : 'Follow'}
-      </button>
-    </div>
+      </Button>
+      </InfoBox>
+      
+    </CardBox>
   );
 };
 
