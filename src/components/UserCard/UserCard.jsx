@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Boy from '../images/Boy.png';
-import picture from '../images/picture2.png'
-import logo from '../images/Logo.png'
+import picture from '../images/picture2.png';
+import logo from '../images/Logo.png';
 
-import { CardBox, PictureBox, Logo, Picture, Divider, Avatar, InfoBox, Text, Button } from './UserCard.styled'
+import {
+  CardBox,
+  PictureBox,
+  Logo,
+  Picture,
+  Divider,
+  Avatar,
+  InfoBox,
+  Text,
+  Button,
+} from './UserCard.styled';
 
-const UserCard = ({ avatar, tweets }) => {
+const UserCard = ({ user }) => {
   const [followers, setFollowers] = useState(() => {
-    return JSON.parse(localStorage.getItem('followers')) ?? 100500;
+    return JSON.parse(localStorage.getItem('followers')) ?? user.followers;
   });
 
   const [isFollowing, setIsFollowing] = useState(() => {
@@ -26,7 +36,7 @@ const UserCard = ({ avatar, tweets }) => {
 
   return (
     <CardBox>
-       <Logo src={logo} alt="logo" />
+      <Logo src={logo} alt="logo" />
       <PictureBox>
         <Picture src={picture} alt="Goit" />
       </PictureBox>
@@ -34,14 +44,16 @@ const UserCard = ({ avatar, tweets }) => {
         <Avatar src={Boy} alt="Bob" />
       </Divider>
       <InfoBox>
-<Text>{tweets} tweets</Text>
-      <Text>{followers} followers</Text>
+        <Text>{user.tweets} tweets</Text>
+        <Text>{new Intl.NumberFormat('en-US').format(followers)} followers</Text>
 
-      <Button onClick={handleFollow} className={isFollowing ? 'following' : ''}>
-        {isFollowing ? 'Following' : 'Follow'}
-      </Button>
+        <Button
+          onClick={handleFollow}
+          className={isFollowing ? 'following' : ''}
+        >
+          {isFollowing ? 'Following' : 'Follow'}
+        </Button>
       </InfoBox>
-      
     </CardBox>
   );
 };

@@ -1,19 +1,16 @@
-import UserCard from './UserCard/UserCard'
-import users from '../components/users.json'
+import UserCard from './UserCard/UserCard';
+import { Box } from './UserCard/UserCard.styled'
 
 export const App = () => {
+  const user = {
+    avatar: '../components/images/Boy.png',
+    followers: 100500,
+    tweets: 777,
+  };
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      <UserCard avatar={users.avatar } tweets={users.tweets } followers={users.followers} />
-    </div>
+    <Box>
+      <UserCard user={user}/>
+    </Box>
   );
 };
